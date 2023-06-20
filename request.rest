@@ -1,0 +1,29 @@
+@host = http://127.0.0.1:8000/api/
+
+
+POST {{host}}auth/register
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "test",
+    "email": "test",
+    "password": "password",
+    "phone_number": "1234567890",
+}
+
+###
+POST {{host}}login
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email": "test@test.com",
+    "password": "password"
+}
+
+###
+GET {{ host }}sanctum/csrf-cookie
+Content-Type: application/json
+Accept: application/json
+
