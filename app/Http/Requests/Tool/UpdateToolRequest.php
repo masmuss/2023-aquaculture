@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Pool;
+namespace App\Http\Requests\Tool;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class UpdatePoolRequest extends FormRequest
+class UpdateToolRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,12 +23,13 @@ class UpdatePoolRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'hardware_id' => 'required|string',
-            'name' => 'required|string',
-            'wide' => 'required|numeric',
-            'long' => 'required|numeric',
-            'depth' => 'required|numeric',
-            'noted' => 'nullable|string|max:255',
+            'hardware_id' => 'required|string|exists:ponds,hardware_id',
+            'pool_id' => 'required|numeric|exists:pools,id',
+            'time' => 'required|string',
+            'temperature' => 'required|numeric',
+            'ph' => 'required|numeric',
+            'salinity' => 'required|numeric',
+            'do' => 'required|numeric',
         ];
     }
 }

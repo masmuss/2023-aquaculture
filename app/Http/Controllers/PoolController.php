@@ -21,7 +21,7 @@ class PoolController extends Controller
 
     public function index(): JsonResponse
     {
-        $pools = $this->model->latest()->where('user_id', Auth::id())->get();
+        $pools = $this->model->latest()->where('user_id', Auth::id())->with('tools')->get();
         return response()->json(PoolResource::collection($pools), 200);
     }
 

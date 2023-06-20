@@ -20,7 +20,7 @@ class PondController extends Controller
 
     public function index(): JsonResponse
     {
-        $ponds = $this->model->latest()->where('user_id', Auth::id())->get();
+        $ponds = $this->model->latest()->where('user_id', Auth::id())->with('pools')->get();
         return response()->json(PondResource::collection($ponds), 200);
     }
 

@@ -18,6 +18,7 @@ class PoolResource extends JsonResource
             'long' => $this->long,
             'depth' => $this->depth,
             'noted' => $this->noted,
+            'tools' => ToolResource::collection($this->whenLoaded('tools')),
         ];
     }
 }

@@ -15,14 +15,4 @@ return new class extends Migration
             $table->renameColumn('width', 'wide');
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::table('pool', function (Blueprint $table) {
-            //
-        });
-    }
 };
