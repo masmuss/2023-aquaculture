@@ -74,7 +74,11 @@ class PondController extends Controller
         if ($pond->user_id !== Auth::id()) {
             return response()->json(['message' => 'Not Found!'], 404);
         }
+
         $pond->delete();
-        return response()->json(['message' => 'Deleted!']);
+        return response()->json(
+            ['message' => 'Deleted successfully!'],
+            200
+        );
     }
 }

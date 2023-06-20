@@ -2,48 +2,90 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Pool\StorePoolRequest;
+use App\Http\Requests\Pool\UpdatePoolRequest;
+use App\Http\Resources\PoolResource;
+use Illuminate\Http\JsonResponse;
 use App\Models\Pool;
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class PoolController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    private Model $model;
+
+    public function __construct(Pool $model)
     {
-        //
+        $this->model = $model;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function index(): JsonResponse
     {
-        //
+        $pools = $this->model->latest()->where('user_id', Auth::id())->get();
+        return response()->json(PoolResource::collection($pools), 200);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Pool $pool)
+    public function store(StorePoolRequest $request): JsonResponse
     {
-        //
+        $pool = $this->model->create([
+            'hardware_id' => $request->hardware_id,
+            'user_id' => Auth::id(),
+            'name' => $request->name,
+            'wide' => $request->wide,
+            'long' => $request->long,
+            'depth' => $request->depth,
+            'noted' => $request->noted,
+        ]);
+
+        return response()->json(
+            new PoolResource($pool),
+            201
+        );
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Pool $pool)
+    public function show(Pool $pool): JsonResponse
     {
-        //
+        if ($pool->user_id !== Auth::id()) {
+            return response()->json(['message' => 'Not Found!'], 404);
+        }
+
+        return response()->json(
+            new PoolResource($pool),
+            200
+        );
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Pool $pool)
+    public function update(UpdatePoolRequest $request, Pool $pool): JsonResponse
     {
-        //
+        if ($pool->user_id !== Auth::id()) {
+            return response()->json(['message' => 'Not Found!'], 404);
+        }
+
+        $pool->update([
+            'hardware_id' => $request->hardware_id,
+            'name' => $request->name,
+            'wide' => $request->wide,
+            'long' => $request->long,
+            'depth' => $request->depth,
+            'noted' => $request->noted,
+        ]);
+
+        return response()->json(
+            new PoolResource($pool),
+            200
+        );
+    }
+
+    public function destroy(Pool $pool): JsonResponse
+    {
+        if ($pool->user_id !== Auth::id()) {
+            return response()->json(['message' => 'Not Found!'], 404);
+        }
+
+        $pool->delete();
+        return response()->json(
+            ['message' => 'Deleted successfully!'],
+            200
+        );
     }
 }

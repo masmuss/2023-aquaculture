@@ -18,7 +18,7 @@ return new class extends Migration
                 ->cascadeOnDelete()
                 ->references('id')
                 ->on('users');
-            $table->string('hardware_id')->unique()->index();
+            $table->string('hardware_id');
             $table->foreign('hardware_id')
                 ->references('hardware_id')
                 ->on('ponds')
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('width');
             $table->string('depth');
             $table->string('long');
-            $table->string('note')->nullable();
+            $table->string('noted')->nullable();
             $table->timestamps();
         });
     }
