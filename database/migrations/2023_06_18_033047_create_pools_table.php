@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pools', function (Blueprint $table) {
-            $table->uuid('id')->primary()->index();
+            $table->id();
             $table->foreignUuid('user_id')
                 ->constrained()
                 ->cascadeOnDelete()
@@ -24,7 +24,7 @@ return new class extends Migration
                 ->on('ponds')
                 ->onDelete('cascade');
             $table->string('name');
-            $table->string('width');
+            $table->string('wide');
             $table->string('depth');
             $table->string('long');
             $table->string('noted')->nullable();

@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('pools', function (Blueprint $table) {
-            $table->renameColumn('width', 'wide');
+        Schema::table('users', function (Blueprint $table) {
+            $table->boolean('is_admin')->default(false);
+            $table->timestamp('last_seen')->nullable();
         });
     }
 };

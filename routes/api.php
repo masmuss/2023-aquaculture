@@ -13,6 +13,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('users', [\App\Http\Controllers\UserController::class, 'index']);
     Route::apiResource('ponds', \App\Http\Controllers\PondController::class);
     Route::apiResource('pools', \App\Http\Controllers\PoolController::class);
     Route::apiResource('tools', \App\Http\Controllers\ToolController::class);

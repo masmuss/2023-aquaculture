@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Pool extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory;
 
+    public $incrementing = false;
     protected $fillable = [
+        'id',
         'user_id',
         'hardware_id',
         'name',
@@ -20,6 +21,7 @@ class Pool extends Model
         'depth',
         'noted',
     ];
+
 
     public function tools(): HasMany
     {

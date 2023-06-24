@@ -17,6 +17,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@test.com',
             'password' => bcrypt('password'),
             'phone_number' => '081234567890',
+            'is_admin' => 1,
         ]);
 
         \App\Models\User::factory(10)->create();

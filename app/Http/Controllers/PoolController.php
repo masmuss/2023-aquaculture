@@ -27,7 +27,12 @@ class PoolController extends Controller
 
     public function store(StorePoolRequest $request): JsonResponse
     {
+        $latestPoolId = $this->model->latest()->first()->id ?? 0;
+        $allPoolCounter = $this->model->count() > 0 ? $this->model->count() : 1;
+        $poolId = $latestPoolId + 1 / $allPoolCounter;
+
         $pool = $this->model->create([
+            'id' => $poolId,
             'hardware_id' => $request->hardware_id,
             'user_id' => Auth::id(),
             'name' => $request->name,

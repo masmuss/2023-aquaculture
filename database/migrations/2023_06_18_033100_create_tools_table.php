@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('tools', function (Blueprint $table) {
             $table->uuid('id')->primary()->index();
-            $table->foreignUuid('pool_id')->constrained()->cascadeOnDelete()->references('id')->on('pools');
+            $table->foreignId('pool_id')
+                ->constrained()
+                ->cascadeOnDelete()
+                ->references('id')
+                ->on('pools');
             $table->string('hardware_id');
             $table->foreign('hardware_id')
                 ->references('hardware_id')
