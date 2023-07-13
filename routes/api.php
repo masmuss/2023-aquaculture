@@ -8,6 +8,10 @@ use App\Http\Controllers\Api\Auth\LoginController;
 Route::post('auth/register', RegisterController::class);
 Route::post('auth/login', LoginController::class);
 
+Route::get('/ping', function () {
+    return response()->json(['message' => 'pong']);
+})->name('ping');
+
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });

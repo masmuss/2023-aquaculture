@@ -21,6 +21,12 @@ class PoolController extends Controller
 
     public function index(): JsonResponse
     {
+        $user = Auth::user();
+        if ($user->is_admin) {
+            $pools = $this->model->latest()->with('tools')->get();
+            return response()->json(PoolResource::collection($pools), 200);
+        }
+
         $pools = $this->model->latest()->where('user_id', Auth::id())->with('tools')->get();
         return response()->json(PoolResource::collection($pools), 200);
     }
@@ -50,6 +56,15 @@ class PoolController extends Controller
 
     public function show(Pool $pool): JsonResponse
     {
+        $user = Auth::user();
+
+        if ($user->is_admin) {
+            return response()->json(
+                new PoolResource($pool),
+                200
+            );
+        }
+
         if ($pool->user_id !== Auth::id()) {
             return response()->json(['message' => 'Not Found!'], 404);
         }
