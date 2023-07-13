@@ -23,7 +23,7 @@ class PondController extends Controller
         $user = Auth::user();
 
         if ($user->is_admin) {
-            $ponds = $this->model->latest()->with('pools')->get();
+            $ponds = $this->model->latest()->with('pools', 'user')->get();
             return response()->json(PondResource::collection($ponds), 200);
         }
 

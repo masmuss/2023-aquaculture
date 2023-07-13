@@ -16,6 +16,7 @@ class PondResource extends JsonResource
             'name' => $this->name,
             'address' => $this->address,
             'pools' => PoolResource::collection($this->whenLoaded('pools')),
+            'user' => new UserResource($this->whenLoaded('user')),
         ];
     }
 }
