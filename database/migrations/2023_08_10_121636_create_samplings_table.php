@@ -11,22 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pools', function (Blueprint $table) {
-            $table->id();
-            $table->foreignUuid('user_id')
+        Schema::create('samplings', function (Blueprint $table) {
+            $table->uuid('id')->primary()->index();
+            $table->foreignId('pool_id')
                 ->constrained()
                 ->cascadeOnDelete()
                 ->references('id')
-                ->on('users');
+                ->on('pools');
             $table->foreignUuid('hardware_id')
                 ->references('id')
                 ->on('hardwares')
                 ->cascadeOnDelete();
-            $table->string('name');
-            $table->string('wide');
-            $table->string('depth');
-            $table->string('long');
-            $table->string('noted')->nullable();
+            $table->string('time');
+            $table->string('temperature');
+            $table->string('ph');
+            $table->string('salinity');
+            $table->string('do');
             $table->timestamps();
         });
     }
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pools');
+        Schema::dropIfExists('samplings');
     }
 };

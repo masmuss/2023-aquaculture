@@ -13,12 +13,16 @@ return new class extends Migration
     {
         Schema::create('ponds', function (Blueprint $table) {
             $table->uuid('id')->primary()->index();
+            $table->foreignId('regency_id')->references('id')->on('regencies');
             $table->foreignUuid('user_id')
                 ->constrained()
                 ->cascadeOnDelete()
                 ->references('id')
                 ->on('users');
-            $table->string('hardware_id')->unique()->index();
+            $table->foreignUuid('hardware_id')
+                ->references('id')
+                ->on('hardwares')
+                ->cascadeOnDelete();
             $table->string('name');
             $table->string('address');
             $table->timestamps();

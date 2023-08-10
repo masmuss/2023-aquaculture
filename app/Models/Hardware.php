@@ -7,26 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Pool extends Model
+class Hardware extends Model
 {
     use HasFactory;
 
-    public $incrementing = false;
     protected $fillable = [
-        'id',
         'user_id',
-        'hardware_id',
-        'name',
-        'wide',
-        'long',
-        'depth',
-        'noted',
+        'name'
     ];
 
-
-    public function hardware(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Hardware::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function pools(): HasMany
+    {
+        return $this->hasMany(Pool::class);
     }
 
     public function samplings(): HasMany

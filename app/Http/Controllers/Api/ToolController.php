@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\Tool\StoreToolRequest;
-use App\Http\Requests\Tool\UpdateToolRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Tool\{StoreToolRequest, UpdateToolRequest};
 use App\Http\Resources\ToolResource;
 use App\Models\Tool;
 use Illuminate\Database\Eloquent\Model;

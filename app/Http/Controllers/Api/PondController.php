@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Pond\{StorePondRequest, UpdatePondRequest};
 use App\Models\Pond;
 use Illuminate\Http\JsonResponse;
@@ -36,6 +37,7 @@ class PondController extends Controller
         $pond = $this->model->create([
             'hardware_id' => $request->hardware_id,
             'user_id' => Auth::id(),
+            'regency_id' => $request->regency_id,
             'name' => $request->name,
             'address' => $request->address,
         ]);
@@ -74,6 +76,7 @@ class PondController extends Controller
 
         $pond->update([
             'hardware_id' => $request->hardware_id,
+            'regency_id' => $request->regency_id,
             'name' => $request->name,
             'address' => $request->address,
         ]);

@@ -11,22 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pools', function (Blueprint $table) {
-            $table->id();
+        Schema::create('hardwares', function (Blueprint $table) {
+            $table->uuid('id')->primary()->index();
             $table->foreignUuid('user_id')
                 ->constrained()
                 ->cascadeOnDelete()
                 ->references('id')
-                ->on('users');
-            $table->foreignUuid('hardware_id')
-                ->references('id')
-                ->on('hardwares')
-                ->cascadeOnDelete();
-            $table->string('name');
-            $table->string('wide');
-            $table->string('depth');
-            $table->string('long');
-            $table->string('noted')->nullable();
+                ->on('users')
+                ->nullable();
+            $table->string('name')->index();
             $table->timestamps();
         });
     }
@@ -36,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pools');
+        Schema::dropIfExists('hardwares');
     }
 };

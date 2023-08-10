@@ -17,6 +17,8 @@ class ProvinceSeeder extends Seeder
             $provinces[] = [
                 'id' => $obj->id,
                 'name' => $obj->name,
+                'created_at' => now(),
+                'updated_at' => now(),
             ];
         }
 

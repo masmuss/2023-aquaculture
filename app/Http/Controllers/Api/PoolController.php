@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\Pool\StorePoolRequest;
-use App\Http\Requests\Pool\UpdatePoolRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Pool\{StorePoolRequest, UpdatePoolRequest};
 use App\Http\Resources\PoolResource;
 use Illuminate\Http\JsonResponse;
 use App\Models\Pool;

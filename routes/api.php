@@ -1,24 +1,29 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\Auth\RegisterController;
-use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\Api\Auth\{RegisterController, LoginController};
+use App\Http\Controllers\Api\{
+    UserController,
+    PondController,
+    PoolController,
+    ToolController,
+    ProvinceController,
+    RegencyController
+};
 
 Route::post('auth/register', RegisterController::class);
 Route::post('auth/login', LoginController::class);
 
-Route::get('/ping', function () {
-    return response()->json(['message' => 'pong']);
-})->name('ping');
-
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/ping', fn () => response()->json(['message' => 'pong']))->name('ping');
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('users', [\App\Http\Controllers\UserController::class, 'index']);
-    Route::apiResource('ponds', \App\Http\Controllers\PondController::class);
-    Route::apiResource('pools', \App\Http\Controllers\PoolController::class);
-    Route::apiResource('tools', \App\Http\Controllers\ToolController::class);
+    Route::get('/user', fn (\Illuminate\Http\Request $request) => $request->user());
+    Route::apiResource('users', UserController::class);
+    Route::apiResources([
+        'ponds' => PondController::class,
+        'pools' => PoolController::class,
+        'tools' => ToolController::class,
+        'provinces' => ProvinceController::class,
+        'regencies' => RegencyController::class,
+    ]);
 });

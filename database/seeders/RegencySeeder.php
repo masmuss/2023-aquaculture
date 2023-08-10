@@ -18,6 +18,8 @@ class RegencySeeder extends Seeder
                 'id' => $obj->id,
                 'province_id' => $obj->province_id,
                 'name' => $obj->name,
+                'created_at' => now(),
+                'updated_at' => now(),
             ];
         }
 
