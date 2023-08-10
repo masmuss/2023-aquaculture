@@ -13,14 +13,13 @@ return new class extends Migration
     {
         Schema::create('pools', function (Blueprint $table) {
             $table->id();
-            $table->foreignUuid('user_id')
-                ->constrained()
-                ->cascadeOnDelete()
-                ->references('id')
-                ->on('users');
             $table->foreignUuid('hardware_id')
                 ->references('id')
                 ->on('hardwares')
+                ->cascadeOnDelete();
+            $table->foreignUuid('pond_id')
+                ->references('id')
+                ->on('ponds')
                 ->cascadeOnDelete();
             $table->string('name');
             $table->string('wide');

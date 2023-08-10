@@ -13,9 +13,9 @@ class HardwareController extends Controller
 {
     private Model $model;
 
-    public function __construct(Hardware $hardware)
+    public function __construct(Hardware $model)
     {
-        $this->model = $hardware;
+        $this->model = $model;
     }
 
     public function index(): JsonResponse
@@ -35,7 +35,7 @@ class HardwareController extends Controller
      */
     public function show(Hardware $hardware): JsonResponse
     {
-        $data = $hardware->with('pools')->first();
+        $data = $this->model->with(['pools', 'user'])->find($hardware->id);
         return response()->json($data, 200);
     }
 

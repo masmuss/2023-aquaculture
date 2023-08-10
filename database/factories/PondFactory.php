@@ -17,11 +17,12 @@ class PondFactory extends Factory
     public function definition(): array
     {
         $userIds = \App\Models\User::where('is_admin', false)->pluck('id')->toArray();
+        $regencyIds = \App\Models\Regency::all()->pluck('id')->toArray();
 
         return [
             'name' => fake()->words(2, true),
             'user_id' => $userIds[array_rand($userIds)],
-            'hardware_id' => fake()->regexify('[A-Z]\d{2}\.\d'),
+            'regency_id' => $regencyIds[array_rand($regencyIds)],
             'address' => fake()->address(),
         ];
     }

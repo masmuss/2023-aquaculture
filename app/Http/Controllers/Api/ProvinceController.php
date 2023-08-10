@@ -26,7 +26,7 @@ class ProvinceController extends Controller
 
     public function show(Province $province): JsonResponse
     {
-        $data = $province->with('regencies')->first();
+        $data = $this->model->with('regencies')->find($province->id);
 
         return response()->json($data, 200);
     }

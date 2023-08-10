@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Hardware;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,17 +17,18 @@ class PoolFactory extends Factory
      */
     public function definition(): array
     {
-        $pond = \App\Models\Pond::all();
-        $hardwareIds = $pond->pluck('hardware_id')->toArray();
+        $hardwareModel = Hardware::all();
+        $hardwareIds = $hardwareModel->pluck('id')->toArray();
+        $pondIds = \App\Models\Pond::all()->pluck('id')->toArray();
 
         return [
-            'user_id' => $this->faker->randomElement(\App\Models\User::pluck('id')->toArray()),
+            'pond_id' => $this->faker->randomElement($pondIds),
             'hardware_id' => $this->faker->randomElement($hardwareIds),
-            'name' => $this->faker->name(),
+            'name' => $this->faker->sentence(2),
             'wide' => $this->faker->randomFloat(2, 1, 100),
             'long' => $this->faker->randomFloat(2, 1, 100),
             'depth' => $this->faker->randomFloat(2, 1, 100),
-            'noted' => $this->faker->text(),
+            'noted' => $this->faker->sentence(5),
         ];
     }
 }

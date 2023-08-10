@@ -15,7 +15,6 @@ class Pond extends Model
         'name',
         'user_id',
         'regency_id',
-        'hardware_id',
         'address',
     ];
 

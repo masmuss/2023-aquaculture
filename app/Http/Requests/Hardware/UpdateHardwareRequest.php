@@ -2,18 +2,10 @@
 
 namespace App\Http\Requests\Hardware;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\AuthenticatedRequest;
 
-class UpdateHardwareRequest extends FormRequest
+class UpdateHardwareRequest extends AuthenticatedRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return false;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -22,7 +14,8 @@ class UpdateHardwareRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => 'string|nullable|exists:users,id',
+            'name' => 'required|string',
         ];
     }
 }

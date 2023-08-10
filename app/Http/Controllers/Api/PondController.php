@@ -35,7 +35,6 @@ class PondController extends Controller
     public function store(StorePondRequest $request): JsonResponse
     {
         $pond = $this->model->create([
-            'hardware_id' => $request->hardware_id,
             'user_id' => Auth::id(),
             'regency_id' => $request->regency_id,
             'name' => $request->name,

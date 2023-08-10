@@ -2,19 +2,10 @@
 
 namespace App\Http\Requests\Regency;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AuthenticatedRequest;
 
-class StoreRegencyRequest extends FormRequest
+class StoreRegencyRequest extends AuthenticatedRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return Auth::check();
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,7 +15,7 @@ class StoreRegencyRequest extends FormRequest
     {
         return [
             'province_id' => 'required|exists:provinces,id',
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:regencies,name',
         ];
     }
 }

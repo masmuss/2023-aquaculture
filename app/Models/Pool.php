@@ -14,7 +14,7 @@ class Pool extends Model
     public $incrementing = false;
     protected $fillable = [
         'id',
-        'user_id',
+        'pond_id',
         'hardware_id',
         'name',
         'wide',
@@ -22,7 +22,6 @@ class Pool extends Model
         'depth',
         'noted',
     ];
-
 
     public function hardware(): BelongsTo
     {

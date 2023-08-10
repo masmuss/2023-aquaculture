@@ -37,7 +37,7 @@ class RegencyController extends Controller
 
     public function show(Regency $regency): JsonResponse
     {
-        $data = $regency->with('province')->first();
+        $data = $this->model->find($regency->id);
         return response()->json($data, 200);
     }
 

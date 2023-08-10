@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('hardwares', function (Blueprint $table) {
-            $table->uuid('id')->primary()->index();
+            $table->uuid('id')->index();
             $table->foreignUuid('user_id')
-                ->constrained()
+                ->nullable()
+                ->default(null)
                 ->cascadeOnDelete()
                 ->references('id')
-                ->on('users')
-                ->nullable();
+                ->on('users');
             $table->string('name')->index();
             $table->timestamps();
         });

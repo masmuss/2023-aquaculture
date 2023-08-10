@@ -11,14 +11,17 @@ class PoolResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->user_id,
             'hardware_id' => $this->hardware_id,
+            'pond_id' => $this->pond_id,
             'name' => $this->name,
             'wide' => $this->wide,
             'long' => $this->long,
             'depth' => $this->depth,
             'noted' => $this->noted,
-            'tools' => ToolResource::collection($this->whenLoaded('tools')),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'samplings' => RecordResource::collection($this->whenLoaded('samplings')),
+            'monitorings' => RecordResource::collection($this->whenLoaded('monitorings')),
         ];
     }
 }

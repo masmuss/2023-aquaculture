@@ -19,10 +19,6 @@ return new class extends Migration
                 ->cascadeOnDelete()
                 ->references('id')
                 ->on('users');
-            $table->foreignUuid('hardware_id')
-                ->references('id')
-                ->on('hardwares')
-                ->cascadeOnDelete();
             $table->string('name');
             $table->string('address');
             $table->timestamps();

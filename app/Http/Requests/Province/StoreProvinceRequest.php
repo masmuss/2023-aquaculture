@@ -2,19 +2,11 @@
 
 namespace App\Http\Requests\Province;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\AuthenticatedRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StoreProvinceRequest extends FormRequest
+class StoreProvinceRequest extends AuthenticatedRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return Auth::check();
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,7 +15,7 @@ class StoreProvinceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|string|unique:provinces,id',
+            'id' => 'required|integer|unique:provinces,id',
             'name' => 'required|string|unique:provinces,name'
         ];
     }

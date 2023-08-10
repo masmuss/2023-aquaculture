@@ -2,19 +2,10 @@
 
 namespace App\Http\Requests\Pond;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AuthenticatedRequest;
 
-class StorePondRequest extends FormRequest
+class StorePondRequest extends AuthenticatedRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return Auth::check();
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,7 +14,7 @@ class StorePondRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'hardware_id' => 'required|string|unique:ponds,hardware_id',
+            'regency_id' => 'required|exists:regencies,id',
             'name' => 'required|string',
             'address' => 'required|string',
         ];

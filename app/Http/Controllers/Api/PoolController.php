@@ -23,23 +23,23 @@ class PoolController extends Controller
     {
         $user = Auth::user();
         if ($user->is_admin) {
-            $pools = $this->model->latest()->with('tools')->get();
+            $pools = $this->model->latest()->get();
             return response()->json(PoolResource::collection($pools), 200);
         }
 
-        $pools = $this->model->latest()->where('user_id', Auth::id())->with('tools')->get();
+        $pools = $this->model->latest()->where('user_id', Auth::id())->get();
         return response()->json(PoolResource::collection($pools), 200);
     }
 
     public function store(StorePoolRequest $request): JsonResponse
     {
-        $latestPoolId = $this->model->latest()->first()->id ?? 0;
+        $latestPoolId = $this->model->count() > 0 ? $this->model->orderBy('id', 'desc')->first()->id : 0;
         $poolId = $latestPoolId + 1;
 
         $pool = $this->model->create([
             'id' => $poolId,
             'hardware_id' => $request->hardware_id,
-            'user_id' => Auth::id(),
+            'pond_id' => $request->pond_id,
             'name' => $request->name,
             'wide' => $request->wide,
             'long' => $request->long,
@@ -58,8 +58,9 @@ class PoolController extends Controller
         $user = Auth::user();
 
         if ($user->is_admin) {
+            $data = $this->model->where('id', $pool->id)->with('samplings', 'monitorings')->first();
             return response()->json(
-                new PoolResource($pool),
+                new PoolResource($data),
                 200
             );
         }
@@ -76,12 +77,9 @@ class PoolController extends Controller
 
     public function update(UpdatePoolRequest $request, Pool $pool): JsonResponse
     {
-        if ($pool->user_id !== Auth::id()) {
-            return response()->json(['message' => 'Not Found!'], 404);
-        }
-
         $pool->update([
             'hardware_id' => $request->hardware_id,
+            'pond_id' => $request->pond_id,
             'name' => $request->name,
             'wide' => $request->wide,
             'long' => $request->long,
@@ -97,10 +95,6 @@ class PoolController extends Controller
 
     public function destroy(Pool $pool): JsonResponse
     {
-        if ($pool->user_id !== Auth::id()) {
-            return response()->json(['message' => 'Not Found!'], 404);
-        }
-
         $pool->delete();
         return response()->json(
             ['message' => 'Deleted successfully!'],
